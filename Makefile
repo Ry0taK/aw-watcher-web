@@ -8,10 +8,12 @@ build: install
 
 dist:
 	mkdir -p dist
-	cp -r out/ dist/
-	cp -r static/ dist/
-	cp -r media/logo/logo-128.png dist/
-	cp -r media/banners/banner.png dist/
+	cp -r out/ dist/out/
+	cp -r static/ dist/static/
+	mkdir -p dist/logo
+	cp -r media/logo/logo-128.png dist/logo/
+	mkdir -p dist/banners
+	cp -r media/banners/banner.png dist/banners/
 	cp manifest.json dist/
 
 
