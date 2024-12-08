@@ -1,5 +1,7 @@
 aw-watcher-web.zip
+aw-watcher-web.xpi
 out
 build
+dist
 node_modules
 .DS_Store
