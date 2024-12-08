@@ -4,7 +4,7 @@
   "name": "ActivityWatch-Fork",
   "short_name": "ActivityWatch-Fork",
   "description": "Fork of ActivityWatch with some changes",
-  "version": "0.4.8",
+  "version": "0.4.8-1",
   "icons": {
     "128": "media/logo/logo-128.png"
   },
