@@ -19,7 +19,7 @@ jobs:
           make build
       - name: Sign files
         run: |
-          web-ext sign --api-key $MOZILLA_API_KEY --api-secret $MOZILLA_API_SECRET --channel unlisted && mv web-ext-artifacts/*.xpi aw-watcher-web.xpi
+          npx web-ext sign --api-key $MOZILLA_API_KEY --api-secret $MOZILLA_API_SECRET --channel unlisted && mv web-ext-artifacts/*.xpi aw-watcher-web.xpi
         env:
           MOZILLA_API_KEY: ${{ secrets.MOZILLA_API_KEY }}
           MOZILLA_API_SECRET: ${{ secrets.MOZILLA_API_SECRET }}
