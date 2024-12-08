@@ -12,10 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Build extension
-        run: npm run build
-      - name: Install web-ext
         run: |
-          npm install -g web-ext
+          npm i 
+          npm run build
       - name: Sign files
         run: |
           web-ext sign --api-key $MOZILLA_API_KEY --api-secret $MOZILLA_API_SECRET --channel unlisted && mv web-ext-artifacts/*.xpi aw-watcher-web.xpi

@@ -15,5 +15,8 @@
     },
     "scripts": {
         "build": "mkdir -p out; browserify src/*.js > out/app.js"
+    },
+    "devDependencies": {
+        "web-ext": "^8.3.0"
     }
 }
