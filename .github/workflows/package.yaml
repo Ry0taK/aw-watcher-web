@@ -15,8 +15,8 @@ jobs:
           submodules: true
       - name: Build extension
         run: |
-          npm ci
-          npm run build
+          make install
+          make build
       - name: Sign files
         run: |
           web-ext sign --api-key $MOZILLA_API_KEY --api-secret $MOZILLA_API_SECRET --channel unlisted && mv web-ext-artifacts/*.xpi aw-watcher-web.xpi
