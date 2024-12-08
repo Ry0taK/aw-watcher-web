@@ -38,9 +38,11 @@ var last_heartbeat_time = null;
 function heartbeat(tab, tabCount) {
   //console.log(JSON.stringify(tab));
   var now = new Date();
+  const url = new URL(tab.url);
+  const origin = client.domainOnly ? (url.origin === "null" ? `${url.protocol}//${url.host}` : url.origin) : tab.url;
   var data = {
-    url: tab.url,
-    title: tab.title,
+    url: origin,
+    title: client.domainOnly ? origin : tab.title,
     audible: tab.audible,
     incognito: tab.incognito,
     tabCount: tabCount,
@@ -149,8 +151,9 @@ function stopWatcher() {
  */
 
 function popupRequestReceived(msg) {
-  if (msg.enabled != undefined) {
-    chrome.storage.local.set({ enabled: msg.enabled });
+  if (msg.enabled != undefined && msg.baseURL != undefined && msg.domainOnly != undefined) {
+    console.log('popupRequestReceived', msg);
+    chrome.storage.local.set({ enabled: msg.enabled, baseURL: msg.baseURL, domainOnly: msg.domainOnly });
     if (msg.enabled) {
       startWatcher();
     } else {

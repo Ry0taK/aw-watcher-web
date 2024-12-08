@@ -31,19 +31,10 @@
     </a>
   </div>
 
-  <table>
-    <tr>
-      <th align="right">Enabled:</th>
-      <td>
-        <input type="checkbox" id="status-enabled-checkbox">
-          <!-- Filled by JS -->
-        </input>
-      </td>
-      <td>
-        <button id="status-consent-btn">Consent to Privacy Notice</button>
-      </td>
-    </tr>
+  <hr>
+  <h2>Status</h2>
 
+  <table>
     <tr>
       <th align="right">Connected:</th>
       <td id="status-connected-icon">
@@ -60,11 +51,52 @@
   </table>
 
   <hr>
+  <h2>Settings</h2>
+
+  <table>
+    <tr>
+      <th align="right">Enabled:</th>
+      <td>
+        <input type="checkbox" id="status-enabled-checkbox">
+          <!-- Filled by JS -->
+        </input>
+      </td>
+      <td>
+        <button id="status-consent-btn">Consent to Privacy Notice</button>
+      </td>
+    </tr>
+    <tr>
+      <th align="right">Record domain only:</th>
+      <td>
+        <input type="checkbox" id="settings-domain-only">
+      </td>
+    </tr>
+    <tr>
+      <th align="right">Hostname:</th>
+      <td>
+        <input type="text" id="settings-hostname">
+      </td>
+    </tr>
+    <tr>
+      <th align="right">Port:</th>
+      <td>
+        <input type="number" id="settings-port">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">
+        <button id="settings-save-btn">Save Settings</button>
+      </td>
+    </tr>
+  </table>
+
+  <hr>
 
   <small>
     <p>
       If you find any bugs with this watcher, please report them
-      <a href="https://github.com/ActivityWatch/aw-watcher-web/issues" target="_blank">here</a>.
+      <!-- TODO: Update link if sending a patch to the upstream repo -->
+      <a href="https://github.com/Ry0taK/aw-watcher-web/issues" target="_blank">here</a>.
     </p>
   </small>
 </body>

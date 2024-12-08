@@ -34,23 +34,29 @@ function getBrowserName() {
 
 var client = {
   testing: null,
+  baseURL: null,
+  domainOnly: null,
   awc: null,
   lastSyncSuccess: true,
   browserName: null,
 
-  setup: function() {
+  setup: function () {
     console.log("Setting up client");
     client.browserName = getBrowserName();
     // Check if in dev mode
-    chrome.management.getSelf(function(info) {
-      client.testing = info.installType === "development";
-      console.log("testing: " + client.testing);
+    chrome.storage.local.get(["baseURL", "domainOnly"], function (obj) {
+      chrome.management.getSelf(function (info) {
+        client.testing = info.installType === "development";
+        client.baseURL = obj.baseURL;
+        client.domainOnly = obj.domainOnly;
+        console.log("testing: " + client.testing);
 
-      client.awc = new AWClient("aw-client-web", {testing: client.testing});
-      client.createBucket();
+        client.awc = new AWClient("aw-client-web", { testing: client.testing, baseURL: client.baseURL });
+        client.createBucket();
 
-      // Needed in order to show testing information in popup
-      chrome.storage.local.set({"testing": client.testing, "baseURL": client.awc.baseURL});
+        // Needed in order to show testing information in popup
+        chrome.storage.local.set({ "testing": client.testing, "baseURL": client.awc.baseURL });
+      });
     });
   },
 
@@ -58,14 +64,14 @@ var client = {
     return "aw-watcher-web-" + client.browserName.toLowerCase();
   },
 
-  updateSyncStatus: function(){
+  updateSyncStatus: function () {
     chrome.storage.local.set({
       "lastSyncSuccess": client.lastSyncSuccess,
       "lastSync": new Date().toISOString()
     });
   },
 
-  createBucket: function(){
+  createBucket: function () {
     if (this.testing === null)
       return;
     // TODO: We might want to get the hostname somehow, maybe like this:
@@ -76,25 +82,25 @@ var client = {
 
     function attempt() {
       return client.awc.ensureBucket(bucket_id, eventtype, hostname)
-        .catch( (err) => {
+        .catch((err) => {
           console.error("Failed to create bucket, retrying...");
           logHttpError(err);
           return Promise.reject(err);
         }
-      );
+        );
     }
 
     retry(attempt, { forever: true });
   },
 
-  sendHeartbeat: function(timestamp, data, pulsetime) {
+  sendHeartbeat: function (timestamp, data, pulsetime) {
     if (this.testing === null)
       return;
 
     var payload = {
-        "data": data,
-        "duration": 0.0,
-        "timestamp": timestamp.toISOString(),
+      "data": data,
+      "duration": 0.0,
+      "timestamp": timestamp.toISOString(),
     };
 
     var attempt = () => {
@@ -112,7 +118,7 @@ var client = {
         client.lastSyncSuccess = true;
         client.updateSyncStatus();
       }, (err) => {
-        if(client.lastSyncSuccess) {
+        if (client.lastSyncSuccess) {
           emitNotification(
             "Unable to send event to server",
             "Please ensure that ActivityWatch is running"
