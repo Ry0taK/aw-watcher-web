@@ -3,7 +3,17 @@
 # This is what Google and Mozilla wants us to upload when we release a new version to the Addon "store"
 build: install
 	npm run build
+	make dist
 	make aw-watcher-web.zip
+
+dist:
+	mkdir -p dist
+	cp -r out/ dist/
+	cp -r static/ dist/
+	cp -r media/logo/logo-128.png dist/
+	cp -r media/banners/banner.png dist/
+	cp manifest.json dist/
+
 
 install:
 	npm ci
